@@ -1,0 +1,40 @@
+﻿@inherits FortyFingers.DnnMassManipulate.Components._40FingersLib.FfRazorViewPageOfT<FortyFingers.DnnMassManipulate.ManipulatorModules.Search.SearchModel>
+@{
+}
+<div class="dnnForm ffmm-Search" id="ffmmSearchForm">
+    <h2>Search</h2>
+    <fieldset>
+        <div class="dnnFormItem">
+            <label class="dnnLabel">Input</label>
+            <input type="text" name="SearchInput" class="dnnFormInput" maxlength="100" value="" />
+        </div>
+    </fieldset>
+    <ul class="dnnActions dnnClear">
+        <li><input type="button" class="dnnPrimaryAction" onclick="doSearch();" value="Do Search" /></li>
+    </ul>
+	
+	<section class="ffmm-logging">
+		<h3>Logging:</h3>
+		<div id="ffmmSearchLog"></div>
+	</section>
+
+</div>
+<script>
+    function doSearch(service) {
+        var service = FF.getService("40FDMM", "Search", @Model.Context.Module.ModuleID, @Model.Context.Portal.ActiveTab.TabID);
+        var postData = {};
+        postData.SearchInput = $("#ffmmSearchForm input[name=SearchInput]").val();
+
+        FF.postFormFieldsObject(service,
+            "Do",
+            postData,
+            function(data) {
+                // onDone
+                $("#ffmmSearchLog").html(data);
+            },
+            function(responseText) {
+                // onFail
+                $("#ffmmSearchLog").append(postData.TabName + " failed with message " + responseText + "<br/>");
+            });
+    }
+</script>
