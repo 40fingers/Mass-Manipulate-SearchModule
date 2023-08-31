@@ -12,7 +12,6 @@ using DotNetNuke.Security.Permissions;
 using DotNetNuke.Services.Search.Entities;
 using DotNetNuke.Services.Search.Internals;
 using DotNetNuke.Web.Api;
-using FortyFingers.DnnMassManipulate.ManipulatorModules.GenerateTabs;
 using FortyFingers.DnnMassManipulate.ManipulatorModules.Search;
 using Newtonsoft.Json;
 
@@ -29,13 +28,29 @@ namespace FortyFingers.DnnMassManipulate.Services
             var s = InternalSearchController.Instance.GetSearchStatistics();
             var searchTypes = SearchHelper.Instance.GetSearchTypes().Select(st => st.SearchTypeId).ToArray();
 
-            var res = DotNetNuke.Services.Search.Controllers.SearchController.Instance.SiteSearch(new SearchQuery()
+            var searchQuery = new SearchQuery()
             {
                 KeyWords = model.SearchInput,
                 SearchTypeIds = searchTypes,
                 PortalIds = new[] { PortalSettings.PortalId },
-            });
-            string ret = $"Your result: <pre>{JsonConvert.SerializeObject(res, Formatting.Indented)}</pre>";
+                PageSize = model.PageSize,
+                PageIndex = model.PageIndex,
+            };
+            if (!string.IsNullOrEmpty(model.SearchTags))
+            {
+                searchQuery.Tags = model.SearchTags?.Replace("\r\n", "\n").Split('\n');
+            }
+
+            var ret = "";
+            try
+            {
+                var res = DotNetNuke.Services.Search.Controllers.SearchController.Instance.SiteSearch(searchQuery);
+                ret = $"Your result: <pre>{JsonConvert.SerializeObject(res, Formatting.Indented)}</pre>";
+            }
+            catch (Exception e)
+            {
+                ret = $"Exception: <pre>{JsonConvert.SerializeObject(e, Formatting.Indented)}</pre>";
+            }
             return Request.CreateResponse(HttpStatusCode.OK, ret);
         }
 

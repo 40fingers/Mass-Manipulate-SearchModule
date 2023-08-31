@@ -18,5 +18,8 @@ namespace FortyFingers.DnnMassManipulate.ManipulatorModules.Search
     public class SearchPostModel
     {
         public string SearchInput { get; set; }
+        public string SearchTags { get; set; }
+        public int PageSize { get; set; }
+        public int PageIndex { get; set; }
     }
 }

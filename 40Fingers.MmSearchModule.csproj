@@ -134,6 +134,13 @@
   <ItemGroup>
     <Folder Include="Components\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\40Fingers.DnnMassManipulate\40Fingers.DnnMassManipulate.csproj">
+      <Project>{372a7af3-dd49-485c-837c-d479d786fb19}</Project>
+      <Name>40Fingers.DnnMassManipulate</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
