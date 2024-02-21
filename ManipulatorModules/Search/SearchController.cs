@@ -35,6 +35,8 @@ namespace FortyFingers.DnnMassManipulate.Services
                 PortalIds = new[] { PortalSettings.PortalId },
                 PageSize = model.PageSize,
                 PageIndex = model.PageIndex,
+                WildCardSearch = true,
+                AllowLeadingWildcard = true
             };
             if (!string.IsNullOrEmpty(model.SearchTags))
             {
