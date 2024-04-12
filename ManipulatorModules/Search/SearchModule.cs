@@ -22,7 +22,7 @@ namespace FortyFingers.DnnMassManipulate.ManipulatorModules.Search
         /// <returns></returns>
         public override string TabName()
         {
-            return "Search";
+            return "DNN Search";
         }
 
         /// <summary>
